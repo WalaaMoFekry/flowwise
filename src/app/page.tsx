@@ -1,11 +1,19 @@
-import { caller } from '@/trpc/server';
-import React from 'react'
+import { requierAuth } from "@/lib/auth-utils"
+import { caller } from "@/trpc/server";
+import { LogoutButton } from "./logout";
 
 const Page = async () => {
-  const user = await caller.getUsers();
+  await requierAuth();
+
+  const data = await caller.getUsers();
+
   return (
-    <div className='flex items-center justify-center min-w-screen min-h-screen'>
-      {JSON.stringify(user)}
+    <div className='flex flex-col gap-y-6 items-center justify-center min-w-screen min-h-screen'>
+      protected server component
+      <div>
+      {JSON.stringify(data, null, 2)}
+      </div>
+      <LogoutButton />
     </div>
   )
 }
