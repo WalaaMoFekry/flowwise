@@ -24,16 +24,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
-const registerScheme = z.object({
-  email: z.email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
-  confirmPassword:z.string()
-})
-.refine((data) => data.password === data.confirmPassword, {
-  message: "Password dosn't match",
-  path: ["confirmPassword"],
-});
+const registerScheme = z
+  .object({
+    email: z.email("Please enter a valid email address"),
+    password: z.string().min(1, "Password is required"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password dosn't match",
+    path: ["confirmPassword"],
+  });
 
 type RegisterFormValues = z.infer<typeof registerScheme>;
 
@@ -55,17 +57,17 @@ export function RegisterForm() {
         name: values.email,
         email: values.email,
         password: values.password,
-        callbackURL: "/"
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
-          router.push('/')
+          router.push("/");
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message)
-        }
+          toast.error(ctx.error.message);
+        },
       }
-    )
+    );
   };
 
   const isPending = form.formState.isSubmitting;
@@ -88,6 +90,12 @@ export function RegisterForm() {
                     disabled={isPending}
                     type="button"
                   >
+                    <Image
+                      src="/github.svg"
+                      alt="GitHub logo"
+                      width={20}
+                      height={20}
+                    />
                     Continue with GitHub
                   </Button>
                   <Button
@@ -96,6 +104,12 @@ export function RegisterForm() {
                     className="w-full"
                     disabled={isPending}
                   >
+                    <Image
+                      src="/google.svg"
+                      alt="Google logo"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>
@@ -156,10 +170,10 @@ export function RegisterForm() {
                   </Button>
                 </div>
                 <div className="text-center text-sm">
-                    Already have an account?{' '}
-                    <Link href="/login" className="underline underline-offset-4">
+                  Already have an account?{" "}
+                  <Link href="/login" className="underline underline-offset-4">
                     Login
-                    </Link>
+                  </Link>
                 </div>
               </div>
             </form>
