@@ -1,13 +1,13 @@
-import prisma from '@/lib/db'
+import { caller } from '@/trpc/server';
 import React from 'react'
 
-const Home = async () => {
-  const user = await prisma.user.findMany();
+const Page = async () => {
+  const user = await caller.getUsers();
   return (
-    <div>
+    <div className='flex items-center justify-center min-w-screen min-h-screen'>
       {JSON.stringify(user)}
     </div>
   )
 }
 
-export default Home
+export default Page
