@@ -1,8 +1,12 @@
+import prisma from '@/lib/db'
 import React from 'react'
 
-const Home = () => {
+const Home = async () => {
+  const user = await prisma.user.findMany();
   return (
-    <div>Home</div>
+    <div>
+      {JSON.stringify(user)}
+    </div>
   )
 }
 
